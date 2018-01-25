@@ -208,7 +208,7 @@ namespace AlekseyNagovitsyn.TfsPendingChangesMargin
             _scrollMap = scrollMapFactoryService.Create(textView);
 
             var dte = (DTE2)vsServiceProvider.GetService(typeof(DTE));
-            _tfExt = dte.GetObject(typeof(TeamFoundationServerExt).FullName);
+            _tfExt = (TeamFoundationServerExt) dte.GetObject(typeof(TeamFoundationServerExt).FullName);
             Debug.Assert(_tfExt != null, "_tfExt is null.");
             _tfExt.ProjectContextChanged += OnTfExtProjectContextChanged;
 
@@ -445,9 +445,7 @@ namespace AlekseyNagovitsyn.TfsPendingChangesMargin
         /// <param name="reason">The reason of redrawing.</param>
         private void RaiseMarginRedraw(MarginDrawReason reason)
         {
-            var eventHandler = MarginRedraw;
-            if (eventHandler != null)
-                eventHandler(this, new MarginRedrawEventArgs(_cachedChangedLines, reason));
+            MarginRedraw?.Invoke(this, new MarginRedrawEventArgs(_cachedChangedLines, reason));
         }
 
         /// <summary>
@@ -458,8 +456,7 @@ namespace AlekseyNagovitsyn.TfsPendingChangesMargin
         {
             var eventHandler = ExceptionThrown;
             var eventArgs = new ExceptionThrownEventArgs(exception);
-            if (eventHandler != null)
-                eventHandler(this, eventArgs);
+            eventHandler?.Invoke(this, eventArgs);
 
             if (!eventArgs.Handled)
                 throw exception;

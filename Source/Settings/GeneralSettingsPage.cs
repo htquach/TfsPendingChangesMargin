@@ -16,7 +16,6 @@ namespace AlekseyNagovitsyn.TfsPendingChangesMargin.Settings
     /// to the Visual Studio Tools-> Options dialog.
     /// </summary>
     [ClassInterface(ClassInterfaceType.AutoDual)]
-    [CLSCompliant(false), ComVisible(true)]
     public class GeneralSettingsPage : DialogPage
     {
         [Category("Diff Options")]
